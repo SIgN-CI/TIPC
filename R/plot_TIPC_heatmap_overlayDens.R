@@ -126,7 +126,7 @@ plot_TIPC_heatmap_overlayDens <- function(root_dir =  NULL, one_k = NULL, cluste
     ## naming color vect with TIPC cluster ids
     ## ---------------
     col_vec <- col_vec[c(1:no_cluster)]
-    names(col_vec) <- c(1:no_cluster)
+    names(col_vec) <- unique(TIPC_clusters$cluster_no)
 
     ## ---------------
     ## TOP column annotation of TIPC cluster ids

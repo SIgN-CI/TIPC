@@ -113,7 +113,7 @@ plot_TIPC_heatmap <- function(root_dir =  NULL, one_k = NULL, clustering_subfold
     ## naming color vect with TIPC cluster ids
     ## ---------------
     col_vec <- col_vec[c(1:no_cluster)]
-    names(col_vec) <- c(1:no_cluster)
+    names(col_vec) <- unique(TIPC_clusters$cluster_no)
 
     ## ---------------
     ## column annotation of TIPC cluster ids

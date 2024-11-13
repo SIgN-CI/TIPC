@@ -29,8 +29,11 @@ different hexagonal lengths will be processed.}
 \item{output_dir}{A directory path for saving output plot; if NULL, plots will
 be saved in root_dir}
 
-\item{pdf_width, pdf_height}{the width and height of the graphics region in inches.
-The default values are 18 and 12; inherited from \code{\link[grDevices]{pdf}}}
+\item{pdf_width, pdf_height}{the width and height of the graphics region in inches.}
+}
+\value{
+A list containing the normalized TIPC metric values.
+The default values are 18 and 12; inherited from \code{\link[grDevices]{pdf}}
 }
 \description{
 Plotting the changes in TIPC metric count as the grid size i.e. hexagon

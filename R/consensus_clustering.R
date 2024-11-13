@@ -17,8 +17,48 @@
 #' @export
 #' @importFrom grDevices pdf
 #' @importFrom utils write.csv
+#' @importFrom grDevices rainbow
+#' @importFrom graphics hist legend lines
+#' @importFrom utils assignInNamespace
 consensus_clustering <- function(min_k = 2, max_k = 6,distance='pearson',
                                  root_dir = NULL, output_bnm = 'test', seed = 999){
+
+  ## modified CDF function to output delta values
+  CDF <- function (ml, breaks = 100) {
+    plot(c(0), xlim = c(0, 1), ylim = c(0, 1), col = "white",
+         bg = "white", xlab = "consensus index", ylab = "CDF",
+         main = "consensus CDF", las = 2)
+    k = length(ml)
+    this_colors = rainbow(k - 1)
+    areaK = c()
+    for (i in 2:length(ml)) {
+      v = ConsensusClusterPlus:::triangle(ml[[i]], mode = 1)
+      h = hist(v, plot = FALSE, breaks = seq(0, 1, by = 1/breaks))
+      h$counts = cumsum(h$counts)/sum(h$counts)
+      thisArea = 0
+      for (bi in 1:(length(h$breaks) - 1)) {
+        thisArea = thisArea + h$counts[bi] * (h$breaks[bi +
+                                                         1] - h$breaks[bi])
+        bi = bi + 1
+      }
+      areaK = c(areaK, thisArea)
+      lines(h$mids, h$counts, col = this_colors[i - 1], lwd = 2,
+            type = "l")
+    }
+    legend(0.8, 0.5, legend = paste(rep("", k - 1), seq(2, k,
+                                                        by = 1), sep = ""), fill = this_colors)
+    deltaK = areaK[1]
+    for (i in 2:(length(areaK))) {
+      deltaK = c(deltaK, (areaK[i] - areaK[i - 1])/areaK[i -
+                                                           1])
+    }
+    save(deltaK, file = file.path(res_subdir,'deltaK.RData'))
+    par(mar = c(5, 8, 3, 3))
+    plot(1 + (1:length(deltaK)), y = deltaK, xlab = "k", ylab = "Relative change in\narea under CDF curve",
+         main = "", type = "b", cex.main=2, cex.lab=2, cex.axis=2)
+  }
+
+  assignInNamespace("CDF",CDF,ns="ConsensusClusterPlus")
 
   ## ======================
   ## root dir check

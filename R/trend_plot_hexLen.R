@@ -16,6 +16,7 @@
 #'   length. If unspecified (NULL), all found TIPC result folders of
 #'   different hexagonal lengths will be processed.
 #' @param pdf_width,pdf_height the width and height of the graphics region in inches.
+#' @return A list containing the normalized TIPC metric values.
 #' The default values are 18 and 12; inherited from \code{\link[grDevices]{pdf}}
 #' @export
 #' @importFrom grDevices pdf dev.off
@@ -173,5 +174,5 @@ trend_plot_hexLen <- function(root_dir =  NULL, hex_len_range = NULL, hex_len_st
       geom_boxplot(width=.65, outlier.colour='dimgray', position = dodge)+
       guides(fill=guide_legend(nrow=1,byrow=FALSE,title.position = "top", title = 'Hexagon sizes')),
     filename=plot_fnm,width=pdf_width, height=pdf_height)
-
+  return(list(all_lenNdir_res_perc=all_lenNdir_res_perc))
 }
