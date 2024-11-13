@@ -74,3 +74,11 @@ for (ll in seq(40,60,by=10)){
                             all_ref_check=FALSE, ref_cluster_no = 1)
 }
 ````
+## step 8: identify optimal subregion size i.e., hexLen and optimal cluster number
+````
+TIPCmetric_hexLen <- trend_plot_hexLen(root_dir = root_dir)
+opt_hexLen <- optimal_hexLen(TIPCmetric_hexLen$all_lenNdir_res_perc, root_dir)
+opt_k <- optimal_k(optHex_dir=file.path(root_dir, paste0('TIPC_hexLen',opt_hexLen),clustering_subfolder_nm))
+
+````
+
